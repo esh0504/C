@@ -28,6 +28,7 @@ public:
 				arr[i] = min(arr[i], arr[i / 2] + 1);
 			}
 		}
+		
 	}
 	void printAnswer()
 	{
