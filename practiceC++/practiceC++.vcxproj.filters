@@ -165,9 +165,6 @@
     <ClCompile Include="2751.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="10989.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="1712_손익분기점.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -277,6 +274,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="10799_쇠막대기.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="10989_수정렬하기3.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
