@@ -276,6 +276,9 @@
     <ClCompile Include="9461_파도반.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="10799_쇠막대기.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyTerm.h">
