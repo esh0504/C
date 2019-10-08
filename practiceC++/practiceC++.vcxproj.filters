@@ -327,6 +327,12 @@
     <ClCompile Include="1850_최대공약수.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="1912_연속합.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="2606_바이러스.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyTerm.h">
