@@ -333,6 +333,9 @@
     <ClCompile Include="2606_바이러스.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="12015_가장 긴 증가하는 부분 수열2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyTerm.h">

@@ -1,67 +1,44 @@
-#include <iostream>
-
+#include <cstdio>
+#include <vector>
+#include <queue>
+#include <algorithm>
 using namespace std;
 
-class Sol
-{
-private:
-	int n;
-	int k,s,d,w;
-	int arr[1001];
-	int dps[1001];
-	int dpd[1001];
-	int dp[1001];
-	
-public:
-	int max(int a, int b)
-	{
-		return a > b ? a : b;
-	}
-	void setNum()
-	{
-		cin >> n >> k;
-		for (int i = 1; i <= n; i++)
-		{
-			int a;
-			cin >> a;
-			arr[i] = a;
-			dp[i] = a;
+int main() {
+	int T;
+	scanf("%d", &T);
+	for (int t = 0; t<T; t++) {
+
+		int N, K, W, time[1000], pre[1000] = { 0 };
+		vector<int> suc[1000];
+		scanf("%d %d", &N, &K);
+		for (int i = 0; i<N; i++)
+			scanf("%d", time + i);
+		for (int i = 0; i<K; i++) {
+			int X, Y;
+			scanf("%d %d", &X, &Y);
+			suc[X - 1].push_back(Y - 1);
+			pre[Y - 1]++;
 		}
-		for (int i = 1; i <= k; i++)
-		{
-			cin >> s >> d;
-			dps[i] = s;
-			dpd[i] = d;
-		}
-	}
-	void sol()
-	{
-		for (int cnt = 0; cnt <= k; cnt++)
-		{
-			for (int i = 1; i <= k; i++)
-			{
-				dp[dpd[i]] = max(dp[i], dp[dps[i]] + arr[dpd[i]]);
+		scanf("%d", &W);
+		W--;
+
+
+		int result[1000] = { 0 };
+		queue<int> Q;
+
+		for (int i = 0; i<N; i++)
+			if (!pre[i]) Q.push(i);
+
+
+		while (pre[W] > 0) {
+			int u = Q.front();
+			Q.pop();
+			for (int next : suc[u]) {
+				result[next] = max(result[next], result[u] + time[u]);
+				if (--pre[next] == 0) Q.push(next);
 			}
 		}
-		
+		printf("%d\n", result[W] + time[W]);
 	}
-	void printAnswer()
-	{
-		cin >> w;
-		cout << dp[w] << endl;
-	}
-};
-
-int main(void)
-{
-	int testCase;
-	cin >> testCase;
-	for (int t = 0; t < testCase; t++)
-	{
-		Sol s;
-		s.setNum();
-		s.sol();
-		s.printAnswer();
-	}
-	return 0;
 }
