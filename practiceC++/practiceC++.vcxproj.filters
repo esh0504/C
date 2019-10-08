@@ -336,6 +336,9 @@
     <ClCompile Include="12015_가장 긴 증가하는 부분 수열2.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="1260_DFS와 BFS.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyTerm.h">
