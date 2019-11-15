@@ -342,6 +342,12 @@
     <ClCompile Include="14500_테트로미노.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="BST_MAKE.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="B_Tree.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyTerm.h">
