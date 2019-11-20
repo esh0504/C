@@ -348,6 +348,9 @@
     <ClCompile Include="B_Tree.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="1149_RGB거리.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyTerm.h">
