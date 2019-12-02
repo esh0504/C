@@ -372,6 +372,9 @@
     <ClCompile Include="1107_리모컨.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="2589_보물섬.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyTerm.h">
