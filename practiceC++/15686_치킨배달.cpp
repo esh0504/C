@@ -1,90 +1,57 @@
 #include <iostream>
-#include<string.h>
-#include<stack>
-
+#include <vector>
+#include <algorithm>
 using namespace std;
-
-class Sol
+const int MAX = 50;
+const int INF = 987654321;
+int N, M;
+int result;
+int graph[MAX][MAX];
+vector<pair<int, int>> house, chicken;
+bool visited[13];
+int distance(pair<int, int> a, pair<int, int> b)
 {
-private:
-	int n, m;
-	int answer;
-	int** map;
-	bool** check;
-	stack<pair<int, int>> st;
-public:
-	void set()
+	return abs(a.first - b.first) + abs(a.second - b.second);
+}
+void DFS(int idx, int selected)
+{
+	if (selected == M)
 	{
-		cin >> n >> m;
-		map = new int*[n];
-		check = new bool*[n];
-		for (int i = 0; i < n; i++)
+		int tempResult = 0;
+		for (int i = 0; i < house.size(); i++)
 		{
-			map[i] = new int[m];
-			check[i] = new bool[m];
-			memset(map[i], 0, sizeof(int)*m);
-			memset(check[i], false, sizeof(bool)*m);
+			int dist = INF;
+			for (int j = 0; j < chicken.size(); j++)
+				if (visited[j])
+					dist = min(dist, distance(house[i], chicken[j]));
+			tempResult += dist;
 		}
-		for (int i = 0; i < n; i++)
-		{
-			for (int j = 0; j < m; j++)
-			{
-				int a;
-				cin >> a;
-				map[i][j] = a;
-			}
-		}
+		result = min(result, tempResult);
+		return;
 	}
-	void dfs(int cnt, int x, int y)
-	{
-		if (x == n-1, y == m-1)
-		{
-			answer = cnt;
-			return;
-		}
-		check[x][y] = true;
-		if (check[x][y+1] == false && map[x][y+1] == 1)
-		{
-			pair<int, int> pr = make_pair(x, y);
-			st.push(pr);
-			dfs(cnt + 1, x, y + 1);
-		}
-		else if (check[x][y-1] == false && map[x][y-1] == 1)
-		{
-			pair<int, int> pr = make_pair(x, y-1);
-			st.push(pr);
-			dfs(cnt+1, x, y-1);
-		}
-		else if (check[x+1][y] == false && map[x+1][y] == 1)
-		{
-			pair<int, int> pr = make_pair(x+1, y);
-			st.push(pr);
-			dfs(cnt + 1, x+1, y);
-		}
-		else if (check[x-1][y] == false && map[x-1][y] == 1)
-		{
-			pair<int, int> pr = make_pair(x-1, y);
-			st.push(pr);
-			dfs(cnt + 1, x-1, y);
-		}
-		else
-		{
-			int x1 = st.top().first;
-			int y1 = st.top().second;
-			dfs(cnt - 1, x1,y1);
-		}
-	}
-	void print()
-	{
-		cout << answer << endl;
-	}
-};
-
+	if (idx == chicken.size())
+		return;
+	visited[idx] = true;
+	DFS(idx + 1, selected + 1);
+	visited[idx] = false;
+	DFS(idx + 1, selected);
+}
 int main(void)
 {
-	Sol s;
-	s.set();
-	s.dfs(0,0,0);
-	s.print();
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	cin >> N >> M;
+	for (int i = 0; i<N; i++)
+		for (int j = 0; j < N; j++)
+		{
+			cin >> graph[i][j];
+			if (graph[i][j] == 1)
+				house.push_back({ i, j });
+			else if (graph[i][j] == 2)
+				chicken.push_back({ i, j });
+		}
+	result = INF;
+	DFS(0, 0);
+	cout << result << "\n";
 	return 0;
 }
