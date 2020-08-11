@@ -1,50 +1,42 @@
 #include <iostream>
 #include <vector>
-#include <queue>
-#include <algorithm>
+#include<algorithm>
 using namespace std;
 
-bool check(int count, int numOfCards, int num, int cards[])
-{
-	sort(cards, cards + numOfCards);
-	if (cards[1] > num)
-	{
-		return true;
-	}
-	cards[count] = cards[0] + cards[1];
-	cards[0] = num + 10;
-	cards[1] = num + 10;
-	count++;
-	return false;
+int maxNum(int a, int b) {
+	return a > b ? a : b;
 }
-
-int main(void)
-{
-	int numOfCards, number;
-	int cards[101];
-	int cnt = numOfCards;
-	cin >> numOfCards >> number;
-	for (int i = 0; i < numOfCards; i++)
-	{
+int main() {
+	int max = 0;
+	int n, m;
+	cin >> n >> m;
+	vector<int> v;
+	for (int i = 0; i < n; i++) {
 		int k;
 		cin >> k;
-		if (k > number)
-		{
+		if (k > m) {
 			continue;
 		}
-		else if (k == number)
-		{
-			cout << number << endl;
-			return 0;
+		v.push_back(k);
+	}
+	sort(v.begin(), v.end());
+	for (int i = 0; i < n; i++) {
+		for (int j = i + 1; j < n; j++) {
+			for (int k = j + 1; k < n; k++) {
+				int sum = v[i] + v[j] + v[k];
+				if (sum == m) {
+					max = m;
+					i = j = k = n;
+					continue;
+				}
+				if (sum > m) {
+					break;
+				}
+				else {
+					max = maxNum(max, sum);
+				}
+			}
 		}
-		cards[i]=k;
 	}
-	while (check(int cnt, int numOfCards, int number, int cards[]))
-	{
-		check(int cnt, int numOfCards, int number, int cards[]);
-	}
-	sort(cards, cards + numOfCards);
-	cout << cards[0] << endl;
-	return 0;
-
+	cout << max << endl;
 }
