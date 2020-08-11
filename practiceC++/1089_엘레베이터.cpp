@@ -1,82 +1,90 @@
+
 #include <iostream>
-#include <vector>
 #include <string>
-#include <cmath>
+#include <vector>
 
 using namespace std;
 
-int main(void) {
-	int n;
-	long long sum = 0;
+const string numData[5] = {
+"###...#.###.###.#.#.###.###.###.###.###",
+"#.#...#...#...#.#.#.#...#.....#.#.#.#.#",
+"#.#...#.###.###.###.###.###...#.###.###",
+"#.#...#.#.....#...#...#.#.#...#.#.#...#",
+"###...#.###.###...#.###.###...#.###.###"
+};
+
+int num[10];
+
+int n;
+vector <int> info;
+vector < vector<int> > pos;
+size_t counter = 1;
+
+void init1();
+void init2(int, string[]);
+size_t makeCom();
+
+int main() {
+	string input[5];
+
 	cin >> n;
-	vector <vector<int>> availableNum;
-	vector<string> elevator;
+	for (int i = 0; i < 5; i++)
+		cin >> input[i];
+	info.resize(n, 0);
+	pos.resize(n);
 
-	//입력 받기
-	for (int i = 0; i < 5; i++) {
-		string word = "";
-		cin >> word;
-		elevator.push_back(word);
-	}
-	
-	//될 수 있는 숫자들을 배열에 넣음 ex)[[0,8][8,9]]
-	for (int i = 0; i < n; i++) {
-		int num[10] = { 0 };
-		if (elevator[0][4 * i] == '#') {
-			num[1] = 10;
-		}if (elevator[0][4 * i + 1] == '#') {
-			num[1] = num[4] = 10;
-		}if (elevator[1][4 * i] == '#') {
-			num[1] = num[2] = num[3] = num[7] = 10;
-		}if (elevator[1][4 * i + 2] == '#') {
-			num[5] = num[6] = 10;
-		}if (elevator[2][4 * i] == '#') {
-			num[1] = num[7] = 10;
-		}if (elevator[2][4 * i + 1] == '#') {
-			num[0] = num[1] = num[7] = 10;
-		}if (elevator[3][i * 4] == '#') {
-			num[1] = num[2] = num[3] = num[4] = num[5] = num[7] = num[9] = 10;
-		}if (elevator[3][i * 4 + 2] == '#') {
-			num[2] = 10;
-		}if (elevator[4][i * 4] == '#') {
-			num[1] = num[4] = num[7] = 10;
-		}if (elevator[4][i * 4 + 1] == '#') {
-			num[1] = num[4] = num[7] = 10;
+	init1();
+	init2(n, input);
+	/*
+	for (int k = 0; k < 10; k++) {
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 3; j++)
+				cout << ((bool(num[k] & (1 << (j + i * 3))))?'#':'.');
+			cout << endl;
 		}
-		int a=pow(10, n - i - 1);
-		vector<int> popo;
-		for (int j = 0; j < 10; j++) {
-			if (num[j] == 0) {
-				popo.push_back(j);
-			}
-		}
-		availableNum.push_back(popo);
+		cout << endl;
 	}
+	*/
 
-	//전체 가능한 숫자의 갯수를 구함
-	double mul = 1;
 	for (int i = 0; i < n; i++) {
-		mul *= availableNum[i].size();
+		for (int j = 0; j < 10; j++)
+			if (num[j] == (info[i] | num[j]))
+				pos[i].push_back(j);
+		counter *= pos[i].size();
 	}
+	if (counter == 0) {
+		cout << -1;
+		return 0;
+	}
+	cout << fixed;
+	cout.precision(10);
+	cout << (double)makeCom() / counter;
+}
 
-	// 가능한 숫자에 (전체 가능한 숫자의 갯수/현재 자릿수의 갯수)만큼 곱함
-	long long result = 0;
+void init1() {
+	for (int n = 0; n < 10; n++)
+		for (int i = 0; i < 5; i++)
+			for (int j = 0; j < 3; j++)
+				num[n] |= (bool)(numData[i][j + n * 4] == '#') << (j + i * 3);
+}
+
+void init2(int n, string input[]) {
+	for (int x = 0; x < n; x++)
+		for (int i = 0; i < 5; i++)
+			for (int j = 0; j < 3; j++)
+				info[x] |= (bool)(input[i][j + x * 4] == '#') << (j + i * 3);
+}
+
+size_t makeCom() {
+	// 0은 맨 앞자리, n - 1은 맨뒷자리
+	size_t ans = 0;
 	for (int i = 0; i < n; i++) {
-		int div = mul / availableNum[i].size();
-		if (div == 0) {
-			result = 1;
-			mul = -1;
-			break;
-		}
-		int po = pow(10, n - i-1);
-		for (int j = 0;j< availableNum[i].size(); j++) {
-			result+=availableNum[i][j] * div*po;
-		}
+		size_t tmp = 0;
+		ans *= 10;
+		for (int j = 0; j < pos[i].size(); j++)
+			tmp += pos[i][j];
+		tmp *= (counter / pos[i].size());
+		ans += tmp;
 	}
-	
-	//더한 수를 가능한 숫자의 갯수만큼 나눔
-	cout.precision(6);
-	cout << result / double(mul) << endl;
-	
-	return 0;
+	return ans;
 }
