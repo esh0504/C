@@ -453,6 +453,12 @@
     <ClCompile Include="11047_동전.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="1117_색칠 1.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="9663_N-Queen.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyTerm.h">
