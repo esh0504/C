@@ -450,6 +450,9 @@
     <ClCompile Include="1303_전쟁-전투.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="11047_동전.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyTerm.h">
