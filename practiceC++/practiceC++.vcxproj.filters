@@ -462,6 +462,9 @@
     <ClCompile Include="10808_알파벳 갯수.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="14503_로봇 청소기.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyTerm.h">
