@@ -1,38 +1,72 @@
-#include <iostream>
-#include <stack>
+#include<iostream>
+#include<queue>
+
+#define endl "\n"
+#define MAX 20
 using namespace std;
 
-stack<char> st;
-char map[21][21];
+int R, C, Answer;
+char MAP[MAX][MAX];
+bool Visit[26];
+
+int dx[] = { 0, 0, 1, -1 };
+int dy[] = { 1, -1, 0, 0 };
+
+int Bigger(int A, int B) { if (A > B) return A; return B; }
+
+void Input()
+{
+    cin >> R >> C;
+    for (int i = 0; i < R; i++)
+    {
+        for (int j = 0; j < C; j++)
+        {
+            cin >> MAP[i][j];
+        }
+    }
+}
+
+void DFS(int x, int y, int Cnt)
+{
+    Answer = Bigger(Answer, Cnt);
+
+    for (int i = 0; i < 4; i++)
+    {
+        int nx = x + dx[i];
+        int ny = y + dy[i];
+
+        if (nx >= 0 && ny >= 0 && nx < R && ny < C)
+        {
+            if (Visit[MAP[nx][ny] - 'A'] == false)
+            {
+                Visit[MAP[nx][ny] - 'A'] = true;
+                DFS(nx, ny, Cnt + 1);
+                Visit[MAP[nx][ny] - 'A'] = false;
+            }
+        }
+    }
+}
+
+void Solution()
+{
+    Visit[MAP[0][0] - 'A'] = true;
+    DFS(0, 0, 1);
+
+    cout << Answer << endl;
+}
+
+void Solve()
+{
+    Input();
+    Solution();
+}
+
 int main(void)
 {
-	int r, c;
-	cin >> r >> c;
-	for (int i=1; i <= c; i++)
-	{
-		for (int j = 1; j <= r; j++)
-		{
-			char a;
-			cin >> a;
-			map[i][j] = a;
-		}
-	}
-}
-bool check(int r, int c,char ch)
-{
-	for (int i = 1; i <= c; i++)
-	{
-		for (int j = 1; j <= r; j++)
-		{
-			if (ch == map[i][j])
-			{
-				return false;
-			}
-		}
-	}
-	return true;
-}
-void dfs()
-{
-	
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    Solve();
+
+    return 0;
 }
