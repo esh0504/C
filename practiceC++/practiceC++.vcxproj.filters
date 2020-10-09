@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="소스 파일\알고리즘">
+      <UniqueIdentifier>{930d7e63-8aa7-4f32-a0fd-6fbaab3b95b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="4673.cpp">
@@ -464,6 +467,18 @@
     </ClCompile>
     <ClCompile Include="14503_로봇 청소기.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="marathon2.cpp">
+      <Filter>소스 파일\알고리즘</Filter>
+    </ClCompile>
+    <ClCompile Include="mergesort.cpp">
+      <Filter>소스 파일\알고리즘</Filter>
+    </ClCompile>
+    <ClCompile Include="부분수열의 합 최대값.cpp">
+      <Filter>소스 파일\알고리즘</Filter>
+    </ClCompile>
+    <ClCompile Include="count_radix_Sort.cpp">
+      <Filter>소스 파일\알고리즘</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
