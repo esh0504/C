@@ -4,11 +4,13 @@
 #include<vector>
 #include<algorithm>
 using namespace std;
+
 struct BNode
 {
 	vector<BNode*> childPointer;
 	vector<int> key;
 } *BTreeRoot = new BNode;
+
 class BTree
 {
 	int max;
@@ -22,8 +24,8 @@ public:
 		max = n;
 		min = n / 2 - 1;
 		BNode* root = new BNode;
-		
 	}
+
 	BNode* search(BNode* tree, int key) 
 	{
 		while (!parentStack.empty())

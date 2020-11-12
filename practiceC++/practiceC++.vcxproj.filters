@@ -16,6 +16,9 @@
     <Filter Include="소스 파일\알고리즘">
       <UniqueIdentifier>{930d7e63-8aa7-4f32-a0fd-6fbaab3b95b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Tree">
+      <UniqueIdentifier>{a6340f25-b5bb-4ba2-9d68-e7eee26c8648}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="4673.cpp">
@@ -480,6 +483,18 @@
     <ClCompile Include="count_radix_Sort.cpp">
       <Filter>소스 파일\알고리즘</Filter>
     </ClCompile>
+    <ClCompile Include="사칙연산 과제.cpp">
+      <Filter>소스 파일\알고리즘</Filter>
+    </ClCompile>
+    <ClCompile Include="BST.cpp">
+      <Filter>소스 파일\Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="행렬 체인 문제.cpp">
+      <Filter>소스 파일\알고리즘</Filter>
+    </ClCompile>
+    <ClCompile Include="회의실배정.cpp">
+      <Filter>소스 파일\알고리즘</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyTerm.h">
@@ -498,6 +513,9 @@
   <ItemGroup>
     <Text Include="box.txt">
       <Filter>소스 파일</Filter>
+    </Text>
+    <Text Include="test.txt">
+      <Filter>소스 파일\알고리즘</Filter>
     </Text>
   </ItemGroup>
 </Project>
