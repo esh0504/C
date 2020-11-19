@@ -186,8 +186,6 @@ public:
 						tmpParentNode->right = nullptr;
 					}
 				}
-				
-
 			}
 			else {
 				if (noNodes(p->left, 0) > noNodes(p->right, 0)) {
