@@ -67,26 +67,20 @@ int noNodes(Node* n) {
     return noNodes(n->left) + noNodes(n->right) + 1;
 }
 
-Node* search(Node* n, int key, Node* p, Node*& q) {
-    while (p != NULL) {
-        if (p->key == key) {
-            return p;
-        }
-        else if (p->key > key) {
-            q = p; p = p->left;
-        }
-        else {
-            q = p; p = p->right;
-        }
-    }
-    return NULL;
-}
 void deleteBST(Tree* T,int deleteKey) {
-    Node* parent, * q, * r;
-    
+    Node* parent, * q;
     parent = *T;
     q = NULL;
-    parent = search(*T, deleteKey, parent, q);
+    while (parent != NULL && parent->key!=deleteKey) {
+        if (parent->key > deleteKey) {
+            q = parent;
+            parent = parent->left;
+        }
+        else {
+            q = parent;
+            parent = parent->right;
+        }
+    }
     if (parent == NULL) {
         return;
     }if (parent->left == NULL && parent->right == NULL) {
@@ -101,8 +95,7 @@ void deleteBST(Tree* T,int deleteKey) {
         else {
             *T = NULL;
         }
-    }
-    else if (parent->left == NULL || parent->right == NULL) {
+    }else if (parent->left == NULL || parent->right == NULL) {
         if (q != NULL) {
             if (parent->left != NULL) {
                 if (q->left == parent) {
@@ -120,8 +113,7 @@ void deleteBST(Tree* T,int deleteKey) {
                     q->right = parent->right;
                 }
             }
-        }
-        else {
+        }else {
             if (parent->left != NULL) {
                 *T = parent->left;
             }
@@ -129,33 +121,31 @@ void deleteBST(Tree* T,int deleteKey) {
                 *T = parent->right;
             }
         }
-    }
-    else {
+    }else {
         bool flag = false;
+        Node* changeNode;
         if (height(parent->left) > height(parent->right)) {
-            r = maxNode(parent->left);
-            flag = false;
+            changeNode = maxNode(parent->left);
         }
         else if (height(parent->left) < height(parent->right)) {
-            r = minNode(parent->right);
             flag = true;
+            changeNode = minNode(parent->right);
         }
         else{
             if (noNodes(parent->left) >= noNodes(parent->right)) {
-                r = maxNode(parent->left);
-                flag = false;
+                changeNode = maxNode(parent->left);
             }
             else {
-                r = minNode(parent->right);
                 flag = true;
+                changeNode = minNode(parent->right);
             }
         }
-        parent->key = r->key;
+        parent->key = changeNode->key;
         if (!flag) {
-            deleteBST(&parent->left, r->key);
+            deleteBST(&parent->left, changeNode->key);
         }
         else {
-            deleteBST(&parent->right, r->key);
+            deleteBST(&parent->right, changeNode->key);
         }
     }
 }
