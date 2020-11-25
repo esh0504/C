@@ -1,4 +1,5 @@
-#include<stdio.h>
+﻿#include<stdio.h>
+#include <tuple>
 #include<iostream>
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
 using namespace std;
@@ -11,32 +12,33 @@ typedef Node* Tree;
 typedef enum { LL, RR, LR, RL ,NO} rotationType;
 
 Node* getNode();
-void insertBST(Tree* T, int newKey);
+Node* insertBST(Tree* T, int newKey);
 int height(Node* n);
 int noNodes(Node* n);
 Node* search(Node* n, int key, Node* p, Node*& q);
-void deleteBST(Tree* T, int deleteKey);
+Node* deleteBST(Tree* T, int deleteKey);
 Node* maxNode(Node* n);
 Node* minNode(Node* n);
-int updateBF(Tree* T);
-void rotateLL(Node* x);
-void rotateLR(Node* x);
-void rotateRR(Node* x);
-void rotateRL(Node* x);
-
+Node* updateBF(Tree* T, Node* y, Node** x, Node** P);
+void rotateLL(Tree* T, Node* x, Node* P);
+void rotateLR(Tree* T, Node* x, Node* P);
+void rotateRR(Tree* T, Node* x, Node* P);
+void rotateRL(Tree* T, Node* x, Node* P);
+tuple<Node*,Node*> searchNear(Tree* T, int newKey);
 void inorderAVL(Tree T);
+
 Node* getNode() {
     Node* newNode = new Node();
     return newNode;
 }
 
-void insertBST(Tree* T, int newKey) {
+Node* insertBST(Tree* T, int newKey) {
     Node* p; Node* q;
     Node* newNode;
     p = *T;
     if (p != NULL) {
         if (p->key == newKey) {
-            return;
+            return p;
         }
         q = p;
         if (p->key > newKey) {
@@ -50,7 +52,27 @@ void insertBST(Tree* T, int newKey) {
         newNode = getNode();
         newNode->key = newKey;
         *T = newNode;
+        return *T;
     }
+}
+
+Node* searchParentNode(Tree* T, Node* n) {
+    Node* tmp = *T;
+    Node* P = tmp;
+    while (tmp!=NULL){
+        if (tmp->key > n->key) {
+            P = tmp;
+            tmp = tmp->right;
+        }
+        else if (tmp->key < n->key) {
+            P = tmp;
+            tmp = tmp->left;
+        }
+        else {
+            return P;
+        }
+    }
+    return P;
 }
 
 int height(Node* n) {
@@ -67,7 +89,7 @@ int noNodes(Node* n) {
     return noNodes(n->left) + noNodes(n->right) + 1;
 }
 
-void deleteBST(Tree* T,int deleteKey) {
+Node* deleteBST(Tree* T,int deleteKey) {
     Node* parent, * q;
     parent = *T;
     q = NULL;
@@ -82,7 +104,7 @@ void deleteBST(Tree* T,int deleteKey) {
         }
     }
     if (parent == NULL) {
-        return;
+        return parent;
     }if (parent->left == NULL && parent->right == NULL) {
         if (q != NULL) {
             if (q->left == parent) {
@@ -147,7 +169,9 @@ void deleteBST(Tree* T,int deleteKey) {
         else {
             deleteBST(&parent->right, changeNode->key);
         }
+        
     }
+    return parent;
 }
 
 Node* maxNode(Node* n) {
@@ -161,8 +185,7 @@ Node* minNode(Node* n) {
 }
 
 
-Node* updateBF(Tree* T,Node* y) {
-    
+Node* updateBF(Tree* T, Node* y, Node** x, Node** P) {
     Node* p = y;
     if (p == nullptr) {
         return p;
@@ -183,45 +206,42 @@ Node* updateBF(Tree* T,Node* y) {
         return p;
     }
     else {
-        updateBF(T,p->left);
-        updateBF(T,p->right);
+        updateBF(T,p->left,x,P);
+        updateBF(T,p->right,x,P);
     }
 }
 
-void rotateLL(Node* x) {
-    Node* child = x->left;
-    x->left = child->right;
-    child->right = x;
+void rotateLL(Tree* T, Node* x, Node* P) {
+    P->left = x->right;
+    x->right = P;
     return;
 }
 
-void rotateRR(Node* x) {
-    Node* child = x->right;
-    x->right = child->left;
-    child->left = x;
+void rotateRR(Tree* T, Node* x, Node* P) {
+    P->right = x->left;
+    x->left = P;
     return;
 }
 
-void rotateLR(Node* x) {
-    Node* child = x->left;
-    rotateRR(child);
-    return rotateLL(x);
+void rotateLR(Tree* T, Node* x, Node* P) {
+    rotateRR(T, x->right, x);
+    return rotateLL(T,x,P);
 }
 
-void rotateRL(Node* x) {
-    Node* child = x->right;
-    rotateLL(child);
-    return rotateRR(x);
+void rotateRL(Tree* T, Node* x, Node* P) {
+    rotateLL(T,x->left,x);
+    return rotateRR(T,x,P);
 }
 
 rotationType insertAVL(Tree* T, int newKey) {
-    insertBST(T, newKey);
-    Node* p = updateBF(T, *T);
+    Node* n=insertBST(T, newKey);
+    Node* p=searchParentNode(T, n);
+    Node* q = updateBF(T, n, &n,&p);
     if (p == nullptr) {
         return NO;
     }
     if (p->bf == 2) {
-        if (height(p->left) - height(p->right) == 2) {
+        if (p->left->key>newKey) {
             return LL;
         }
         else {
@@ -229,7 +249,7 @@ rotationType insertAVL(Tree* T, int newKey) {
         }
     }
     else if (p->bf == -2) {
-        if (height(p->left) - height(p->right) == -2) {
+        if (p->right->key<newKey) {
             return RR;
         }
         else {
@@ -243,26 +263,23 @@ rotationType insertAVL(Tree* T, int newKey) {
 }
 
 rotationType deleteAVL(Tree* T, int deleteKey) {
-    deleteBST(T, deleteKey);
-    Node* p = updateBF(T, *T);
+    Node* n=deleteBST(T, deleteKey);
+    Node* P = searchParentNode(T, n);
+    Node* p = updateBF(T, *T,&n,&P);
     if (p == nullptr) {
         return NO;
     }
     if (p->bf == 2) {
-        if (height(p->left) - height(p->right) == 2) {
-            return LL;
-        }
-        else {
+        if (p->left->bf < 0) {
             return LR;
         }
+        return LL;
     }
     else if (p->bf == -2) {
-        if (height(p->left) - height(p->right) == -2) {
-            return RR;
-        }
-        else {
+        if (p->right->bf > 0) {
             return RL;
         }
+        return RR;
     }
     else {
         return NO;

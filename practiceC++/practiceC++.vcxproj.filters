@@ -501,6 +501,9 @@
     <ClCompile Include="AVL_Tree.cpp">
       <Filter>소스 파일\Tree</Filter>
     </ClCompile>
+    <ClCompile Include="버스여행.cpp">
+      <Filter>소스 파일\알고리즘</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyTerm.h">
